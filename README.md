@@ -1,6 +1,10 @@
 # Song Recommendation System
-*Music Recommendation System Using Python*
 
+**Music Recommendation System Using Python**
+
+#### Team Members: [Pragya Raghuvanshi](https://github.com/pr-124), [Sukhpreet Sahota](https://github.com/5ukhy21), [Dingkun Yang](https://github.com/Yer1k)
+
+## Introduction
 This Github Repo supports a song recommendation system that is built by data pulled from Kaggle via Spotify API. The recommendation system enables users to get suggestions based on 3 aspects:
 * Popularity of the music/song
 * Artist
@@ -33,3 +37,5 @@ Songs releasing years from *1921 - 2020*
 Songs Count: *133,638*
 
 Genres Count: *2973*
+
+## More to come
