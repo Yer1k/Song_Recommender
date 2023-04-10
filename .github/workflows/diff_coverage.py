@@ -1,7 +1,7 @@
 """
 Compute diff coverage.
 
-Adpated from EHR GitHub Action
+Adapted from EHR GitHub Action
 Author: Patrick Wang
 """
 import argparse
