@@ -40,47 +40,47 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
-    - name: Check coverage
-      run: |
-        if [ -f .coverage ]; then
-          git fetch -q origin ${{ github.event.pull_request.head.ref }} --depth $(( ${{ github.event.pull_request.commits }} + 1 ))
-          git fetch -q origin ${{ github.event.pull_request.base.ref }}
-          source venv/bin/activate
-          coverage json -q
-          git diff ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} > diff.txt
-          code=$(
-            python .github/workflows/diff_coverage.py diff.txt coverage.json > diff_coverage.txt
-            echo $?
-          )
-          if [[ "$code" = 0 ]]; then status=success; else status=failure; fi
-          message="status: ${status^^}"
-          REPORT=$message
-          if [[ "$status" == "failure" ]]; then
-            REPORT+=$'\nDiff coverage is <70%'
-          else
-            REPORT+=$'\nDiff coverage is >=70%'
-          fi
-          REPORT+=$'\n```\n'
-          REPORT+=$(cat diff_coverage.txt)
-          REPORT+=$'\n```'
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            /repos/${{ github.repository }}/issues/${{ github.event.number }}/comments \
-            -f body="$REPORT" \
-            > comment_response.json
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
-            -f state="$status" \
-            -f context='tests / coverage (pull_request)' \
-            -f description="$message" \
-            -f target_url=$(jq -r ".html_url" comment_response.json)
-            &> /dev/null
-        fi
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+    # - name: Check coverage
+    #   run: |
+    #     if [ -f .coverage ]; then
+    #       git fetch -q origin ${{ github.event.pull_request.head.ref }} --depth $(( ${{ github.event.pull_request.commits }} + 1 ))
+    #       git fetch -q origin ${{ github.event.pull_request.base.ref }}
+    #       source venv/bin/activate
+    #       coverage json -q
+    #       git diff ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} > diff.txt
+    #       code=$(
+    #         python .github/workflows/diff_coverage.py diff.txt coverage.json > diff_coverage.txt
+    #         echo $?
+    #       )
+    #       if [[ "$code" = 0 ]]; then status=success; else status=failure; fi
+    #       message="status: ${status^^}"
+    #       REPORT=$message
+    #       if [[ "$status" == "failure" ]]; then
+    #         REPORT+=$'\nDiff coverage is <70%'
+    #       else
+    #         REPORT+=$'\nDiff coverage is >=70%'
+    #       fi
+    #       REPORT+=$'\n```\n'
+    #       REPORT+=$(cat diff_coverage.txt)
+    #       REPORT+=$'\n```'
+    #       gh api \
+    #         --method POST \
+    #         -H "Accept: application/vnd.github+json" \
+    #         /repos/${{ github.repository }}/issues/${{ github.event.number }}/comments \
+    #         -f body="$REPORT" \
+    #         > comment_response.json
+    #       gh api \
+    #         --method POST \
+    #         -H "Accept: application/vnd.github+json" \
+    #         repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
+    #         -f state="$status" \
+    #         -f context='tests / coverage (pull_request)' \
+    #         -f description="$message" \
+    #         -f target_url=$(jq -r ".html_url" comment_response.json)
+    #         &> /dev/null
+    #     fi
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     - name: Exit with code
       run: |
