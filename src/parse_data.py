@@ -57,7 +57,3 @@ def parse_data(file_path: str) -> dict[str, Song]:
             song_dict[song_id]["popularity"],
         )
     return song
-
-
-if __name__ == "__main__":
-    print(parse_data("../data/data.txt")["4BJqT0PrAfrxzMOxytFOIz"])
