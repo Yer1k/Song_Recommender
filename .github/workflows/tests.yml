@@ -38,7 +38,7 @@ jobs:
           echo 0 > exit_code.txt
         fi
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     - name: Check coverage
       run: |
@@ -80,7 +80,7 @@ jobs:
             &> /dev/null
         fi
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     - name: Exit with code
       run: |
