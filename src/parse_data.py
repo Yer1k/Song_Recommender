@@ -11,6 +11,11 @@ class Song:
         artist_name: str,
         year: str,
         popularity: str,
+        explicit: str,
+        acousticness: str,
+        danceability: str,
+        energy: str,
+        instrumentalness: str,
     ) -> None:
         """Initialize Song class."""
         self.song_id = song_id
@@ -18,6 +23,11 @@ class Song:
         self.artist_name = artist_name
         self.year = year
         self.popularity = popularity
+        self.explicit = explicit
+        self.acousticness = acousticness
+        self.danceability = danceability
+        self.energy = energy
+        self.instrumentalness = instrumentalness
 
     def __repr__(self) -> str:
         """Return string representation of Song."""
@@ -55,5 +65,10 @@ def parse_data(file_path: str) -> dict[str, Song]:
             song_dict[song_id]["artists"],
             song_dict[song_id]["year"],
             song_dict[song_id]["popularity"],
+            song_dict[song_id]["explicit"],
+            song_dict[song_id]["acousticness"],
+            song_dict[song_id]["danceability"],
+            song_dict[song_id]["energy"],
+            song_dict[song_id]["instrumentalness"],
         )
     return song
