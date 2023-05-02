@@ -24,11 +24,12 @@ To create this recommendation system, we divided the project into 4 key steps:
 1. Data Cleaning
 2. Exploratory Data Analysis (EDA)
 3. Building out a song popularity recommender
-4. Testing all components
+4. Incorporating song features recommender into the song feature recommender 
+5. Testing all components
 
 Below is an illustrative flow chart outlining these 4 steps:
 
-<img width="226" alt="image" src="https://user-images.githubusercontent.com/112578035/235776019-b45ce621-fea5-4fbf-97a2-70573ed4d4d8.png">
+<img width="350" alt="image" src="https://user-images.githubusercontent.com/112578035/235789126-14ee239c-effc-4217-8616-9d2005a0cd85.png">
 
 ## Installation
 
@@ -46,74 +47,70 @@ Start by creating a set of songs before passing the Song class to ensure the son
 
 > Example usage:
 > ```
-> import pytest
-> 
 > from parse_data import (
->    Song,
 >    parse_data,
 >)
 > from fake_files import fake_files
 > 
+> 
 > def test_song_class() -> None:
->    #  set up
->    """Test Song class."""
->    song = Song(
->        "4BJqT0PrAfrxzMOxytFOIz",
->        "Piano Concerto No. 3 in D Minor",
->        "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
->        "1921",
->        "4",
->    )
->                
->     #  run and assert
->    assert song.song_id == "4BJqT0PrAfrxzMOxytFOIz"
->    assert song.song_name == "Piano Concerto No. 3 in D Minor"
->    assert (
->        song.artist_name
->        == "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker"
->    )
->    assert song.year == "1921"
->    assert song.popularity == "4"
->    assert song.__repr__() == (
->        "Song Name: Piano Concerto No. 3 in D Minor "
->        + "by Sergei Rachmaninoff & James Levine & Berliner Philharmoniker, "
->        + "Year: 1921"
->    )
->
+>     """Test Song class."""
+>     song = Song(
+>         "4BJqT0PrAfrxzMOxytFOIz",
+>         "Piano Concerto No. 3 in D Minor",
+>         "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
+>         "1921",
+>         "4",
+>     )
+>     assert song.song_id == "4BJqT0PrAfrxzMOxytFOIz"
+>     assert song.song_name == "Piano Concerto No. 3 in D Minor"
+>     assert (
+>         song.artist_name
+>         == "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker"
+>     )
+>     assert song.year == "1921"
+>     assert song.popularity == "4"
+>     assert song.__repr__() == (
+>         "Song Name: Piano Concerto No. 3 in D Minor "
+>         + "by Sergei Rachmaninoff & James Levine & Berliner Philharmoniker, "
+>         + "Year: 1921"
+>     )
+> 
+> 
 > def test_parse_data() -> None:
 >     """Test parse_data function."""
 >     with fake_files(
 >         [
 >             [
->                 "id",
->                 "name",
->                 "artists",
->                 "year",
->                 "popularity",
->             ],
->             [
->                 "4BJqT0PrAfrxzMOxytFOIz",
->                 "Piano Concerto No. 3 in D Minor",
->                 "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
->                 "1921",
->                 "4",
->             ],
->         ]
->     ) as (song_file,):
->         song_dict = parse_data(song_file)
->         assert (
->             song_dict["4BJqT0PrAfrxzMOxytFOIz"].song_id
->             == "4BJqT0PrAfrxzMOxytFOIz"
->         )
->         assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].song_name == (
->             "Piano Concerto No. 3 in D Minor"
->         )
->         assert (
->             song_dict["4BJqT0PrAfrxzMOxytFOIz"].artist_name
->             == "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker"
->         )
->         assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].year == "1921"
->         assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].popularity == "4"
+>                "id",
+>                "name",
+>                "artists",
+>                "year",
+>                "popularity",
+>            ],
+>            [
+>                "4BJqT0PrAfrxzMOxytFOIz",
+>                "Piano Concerto No. 3 in D Minor",
+>                "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
+>                "1921",
+>                "4",
+>            ],
+>        ]
+>    ) as (song_file,):
+>        song_dict = parse_data(song_file)
+>        assert (
+>            song_dict["4BJqT0PrAfrxzMOxytFOIz"].song_id
+>            == "4BJqT0PrAfrxzMOxytFOIz"
+>        )
+>        assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].song_name == (
+>            "Piano Concerto No. 3 in D Minor"
+>        )
+>        assert (
+>            song_dict["4BJqT0PrAfrxzMOxytFOIz"].artist_name
+>            == "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker"
+>        )
+>        assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].year == "1921"
+>        assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].popularity == "4"
 > 
 > ```
 
@@ -125,48 +122,50 @@ For testing the popularity recommender, we are analyzing the dictionary created 
 > ```
 > from fake_files import fake_files
 > from popularity_recommender import *
-> 
-> 
+>
+>
 > def test_calculate_artist_avg_popularity() -> None:
->     # set up
->     
->     with fake_files(
->         [
->             [
->                 "id",
->                 "name",
->                 "artists",
->                 "year",
->                 "popularity",
->             ],
->             [
->                 "4BJqT0PrAfrxzMOxytFOIz",
->                 "Pragya is a genius",
->                 "Dingkun Yang",
->                 "1921",
->                 "4",
->             ],...
->         ]
->     ) as (song_file,):
->         # run
->         s = SongRecommendationSystem(song_file)
-> 
->         # assert
->         assert s.calculate_artist_avg_popularity() == {
->             "Sergei Rachmaninoff": 5,
->             "James Levine": 5,
->             "Berliner Philharmoniker": 5,
->             "Dingkun Yang": 3,
->             "Pragya R": 3,
->             "Sukhpreet S": 6,
->         }
->         assert s.recommend_songs(2) == [
->             "Dingkun is a genius",
->             "Piano Concerto No. 3 in C Major",
->         ]
->         assert (
->             s.__str__()
->             == "SongRecommendationSystem with 5 songs and 6 artists."
+>    # set up
+>    """Test parse_data function."""
+>    with fake_files(
+>        [
+>            [
+>                "id",
+>                "name",
+>                "artists",
+>                "year",
+>                "popularity",
+>            ],
+>            [
+>                "4BJqT0PrAfrxzMOxytFOIz",
+>                "Pragya is a genius",
+>                "Dingkun Yang",
+>                "1921",
+>                "4",
+>            ],...
+>        ]
+>    ) as (song_file,):
+>        # run
+>        s = SongRecommendationSystem(song_file)
+>
+>        # assert
+>        assert s.calculate_artist_avg_popularity() == {
+>            "Sergei Rachmaninoff": 5,
+>            "James Levine": 5,
+>            "Berliner Philharmoniker": 5,
+>            "Dingkun Yang": 3,
+>            "Pragya R": 3,
+>            "Sukhpreet S": 6,
+>        }
+>        assert s.recommend_songs(2) == [
+>            "Dingkun is a genius",
+>            "Piano Concerto No. 3 in C Major",
+>        ]
+>        assert (
+>            s.__str__()
+>            == "SongRecommendationSystem with 5 songs and 6 artists."
+>        )
+>
 > ```
 
 
@@ -175,9 +174,8 @@ As we look to build out this song recommendation system and make it more compreh
 
 To build on our exisiting recommendation system, we will incorporate the following 4 steps into this project:
 1. Building out a song similarity recommender based on artist
-2. Building out a song similarity recommender based on song characteristics/features
-3. Testing all components
-4. Combining into a single song recommendation system
+2. Testing all components
+3. Combining into a single song recommendation system
 
 Below is an illustrative flow chart depicting how our future work will be integrating into our existing system:
 
