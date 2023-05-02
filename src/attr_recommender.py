@@ -25,7 +25,7 @@ class SongRecommender:
                     float(song.energy),
                 ]
             )
-        self.knn_model = NearestNeighbors(n_neighbors=1, metric="cosine")
+        self.knn_model = NearestNeighbors(n_neighbors=1)
         self.knn_model.fit(X)
 
     def recommend_songs(
@@ -48,3 +48,16 @@ class SongRecommender:
             for song_id in indices[0]
         ]
         return recommended_songs
+
+
+if __name__ == "__main__":
+    # Create recommender
+    recommender = SongRecommender("data/data.txt")
+
+    # Get recommendations
+    recommended_songs = recommender.recommend_songs(0.3, 0.2, 0.4, 0.5)
+
+    # Print recommendations
+    print("Recommended Songs:")
+    for song in recommended_songs:
+        print(song)
