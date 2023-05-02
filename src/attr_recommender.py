@@ -48,16 +48,3 @@ class SongRecommender:
             for song_id in indices[0]
         ]
         return recommended_songs
-
-
-if __name__ == "__main__":
-    # Create recommender
-    recommender = SongRecommender("data/data.txt")
-
-    # Get recommendations
-    recommended_songs = recommender.recommend_songs(0.3, 0.2, 0.4, 0.5)
-
-    # Print recommendations
-    print("Recommended Songs:")
-    for song in recommended_songs:
-        print(song)
