@@ -59,10 +59,17 @@ def test_SongRecommender() -> None:
         ]
     ) as (songfile,):
         song_recommender = SongRecommender(songfile)
-        recommended_songs = song_recommender.recommend_songs(
+        recommended_songs_1 = song_recommender.recommend_songs(
             acousticness=0.6,
             danceability=0.5,
             instrumentalness=0.0,
             energy=0.19,
         )
-        assert recommended_songs == ["Piano Concerto No. 3 in D Minor"]
+        assert recommended_songs_1 == ["Piano Concerto No. 3 in D Minor"]
+        recommended_songs_2 = song_recommender.recommend_songs(
+            acousticness=0.961,
+            danceability=0.602,
+            instrumentalness=0.0452,
+            energy=0.93,
+        )
+        assert recommended_songs_2 == ["Gati Bali"]
