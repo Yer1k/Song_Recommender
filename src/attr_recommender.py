@@ -1,9 +1,15 @@
+"""Recommender based on k-nearest neighbors (KNN) algorithm."""
+
+
 from sklearn.neighbors import NearestNeighbors
 from parse_data import parse_data
 
 
 class SongRecommender:
-    def __init__(self, filepath):
+    """Recommender based on k-nearest neighbors (KNN) algorithm."""
+
+    def __init__(self, filepath: str):
+        """Initialize recommender."""
         # Load data from file and create song dictionary
         self.song_dict = parse_data(filepath)
 
@@ -23,8 +29,13 @@ class SongRecommender:
         self.knn_model.fit(X)
 
     def recommend_songs(
-        self, acousticness, danceability, instrumentalness, energy
-    ):
+        self,
+        acousticness: float,
+        danceability: float,
+        instrumentalness: float,
+        energy: float,
+    ) -> list[str]:
+        """Recommend songs based on input features."""
         # Create input feature vector
         input_vector = [[acousticness, danceability, instrumentalness, energy]]
 
