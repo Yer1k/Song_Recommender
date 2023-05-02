@@ -1,0 +1,43 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.9, pytest-7.2.2, pluggy-1.0.0
+rootdir: /Users/yer1k/Documents/Master/Duke/2023 Spring/BIOSTAT 821/Group Project/Song_Recommender, configfile: pyproject.toml
+plugins: anyio-3.6.2
+collected 2 items
+
+tests/test_parse_data.py F.                                              [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_song_class ________________________________
+
+    def test_song_class() -> None:
+        """Test Song class."""
+        song = Song(
+            "4BJqT0PrAfrxzMOxytFOIz",
+            "Piano Concerto No. 3 in D Minor",
+            "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
+            "1921",
+            "4",
+        )
+        assert song.song_id == "4BJqT0PrAfrxzMOxytFOIz"
+        assert song.song_name == "Piano Concerto No. 3 in D Minor"
+        assert (
+            song.artist_name
+            == "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker"
+        )
+        assert song.year == "1921"
+        assert song.popularity == "4"
+>       assert song.__repr__() == (
+            "Song Name: Piano Concerto No. 3 in D Minor "
+            + "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker, "
+            + "Year: 1921"
+        )
+E       AssertionError: assert 'Song Name: P...r, Year: 1921' == 'Song Name: P...r, Year: 1921'
+E         Skipping 33 identical leading characters in diff, use -v to show
+E         - n D Minor Sergei Rachmaninoff & James Levine & Berliner Philharmoniker, Year: 1921
+E         + n D Minor by Sergei Rachmaninoff & James Levine & Berliner Philharmoniker, Year: 1921
+E         ?          +++
+
+tests/test_parse_data.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_parse_data.py::test_song_class - AssertionError: assert 'So...
+========================= 1 failed, 1 passed in 0.03s ==========================

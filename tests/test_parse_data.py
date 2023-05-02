@@ -24,6 +24,11 @@ def test_song_class() -> None:
     )
     assert song.year == "1921"
     assert song.popularity == "4"
+    assert song.__repr__() == (
+        "Song Name: Piano Concerto No. 3 in D Minor "
+        + "by Sergei Rachmaninoff & James Levine & Berliner Philharmoniker, "
+        + "Year: 1921"
+    )
 
 
 def test_parse_data() -> None:
