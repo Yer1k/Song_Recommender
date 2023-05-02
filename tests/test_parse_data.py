@@ -15,6 +15,11 @@ def test_song_class() -> None:
         "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
         "1921",
         "4",
+        "0",
+        "0.982",
+        "0.279",
+        "0.211",
+        "0.878",
     )
     assert song.song_id == "4BJqT0PrAfrxzMOxytFOIz"
     assert song.song_name == "Piano Concerto No. 3 in D Minor"
@@ -24,11 +29,16 @@ def test_song_class() -> None:
     )
     assert song.year == "1921"
     assert song.popularity == "4"
+    assert song.explicit == "0"
     assert song.__repr__() == (
         "Song Name: Piano Concerto No. 3 in D Minor "
         + "by Sergei Rachmaninoff & James Levine & Berliner Philharmoniker, "
         + "Year: 1921"
     )
+    assert song.acousticness == "0.982"
+    assert song.danceability == "0.279"
+    assert song.instrumentalness == "0.211"
+    assert song.energy == "0.878"
 
 
 def test_parse_data() -> None:
@@ -41,6 +51,11 @@ def test_parse_data() -> None:
                 "artists",
                 "year",
                 "popularity",
+                "explicit",
+                "acousticness",
+                "danceability",
+                "instrumentalness",
+                "energy",
             ],
             [
                 "4BJqT0PrAfrxzMOxytFOIz",
@@ -48,6 +63,11 @@ def test_parse_data() -> None:
                 "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
                 "1921",
                 "4",
+                "0",
+                "0.982",
+                "0.279",
+                "0.211",
+                "0.878",
             ],
         ]
     ) as (song_file,):
@@ -65,3 +85,8 @@ def test_parse_data() -> None:
         )
         assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].year == "1921"
         assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].popularity == "4"
+        assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].explicit == "0"
+        assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].acousticness == "0.982"
+        assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].danceability == "0.279"
+        assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].instrumentalness == "0.211"
+        assert song_dict["4BJqT0PrAfrxzMOxytFOIz"].energy == "0.878"
