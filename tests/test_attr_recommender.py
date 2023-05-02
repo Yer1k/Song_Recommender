@@ -1,0 +1,56 @@
+"""Test the attr_recommender module."""
+
+from attr_recommender import SongRecommender
+from fake_files import fake_files
+
+
+def test_SongRecommender() -> None:
+    """Test SongRecommender class."""
+    with fake_files(
+        [
+            [
+                "id",
+                "name",
+                "artists",
+                "acousticness",
+                "danceability",
+                "energy",
+                "instrumentalness",
+            ],
+            [
+                "4BJqT0PrAfrxzMOxytFOIz",
+                "Piano Concerto No. 3 in D Minor",
+                "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
+                "0.654",
+                "0.499",
+                "0.189",
+                "0.0",
+            ],
+            [
+                "7xPhfUan2yNtyFG0cUWkt8",
+                "Clancy Lowered the Boom",
+                "Dennis Day",
+                "0.732",
+                "0.548",
+                "0.186",
+                "0.0",
+            ],
+            [
+                "1o6I8BglA6ylDMrIELygv1",
+                "Gati Bali",
+                "KHP Kridhamardawa Karaton Ngayogyakarta Hadiningrat",
+                "0.961",
+                "0.602",
+                "0.0452",
+                "0.93",
+            ],
+        ]
+    ) as (songfile,):
+        song_recommender = SongRecommender(songfile)
+        recommended_songs = song_recommender.recommend_songs(
+            acousticness=0.6,
+            danceability=0.5,
+            instrumentalness=0.0,
+            energy=0.19,
+        )
+        assert recommended_songs == ["Piano Concerto No. 3 in D Minor"]

@@ -1,0 +1,76 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.9, pytest-7.2.2, pluggy-1.0.0
+rootdir: /Users/yer1k/Documents/Master/Duke/2023 Spring/BIOSTAT 821/Group Project/Song_Recommender, configfile: pyproject.toml
+plugins: anyio-3.6.2
+collected 2 items
+
+tests/test_parse_data.py FF                                              [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_song_class ________________________________
+
+    def test_song_class() -> None:
+        """Test Song class."""
+>       song = Song(
+            "4BJqT0PrAfrxzMOxytFOIz",
+            "Piano Concerto No. 3 in D Minor",
+            "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
+            "1921",
+            "4",
+        )
+E       TypeError: Song.__init__() missing 5 required positional arguments: 'explicit', 'acousticness', 'danceability', 'energy', and 'instrumentalness'
+
+tests/test_parse_data.py:12: TypeError
+_______________________________ test_parse_data ________________________________
+
+    def test_parse_data() -> None:
+        """Test parse_data function."""
+        with fake_files(
+            [
+                [
+                    "id",
+                    "name",
+                    "artists",
+                    "year",
+                    "popularity",
+                ],
+                [
+                    "4BJqT0PrAfrxzMOxytFOIz",
+                    "Piano Concerto No. 3 in D Minor",
+                    "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
+                    "1921",
+                    "4",
+                ],
+            ]
+        ) as (song_file,):
+>           song_dict = parse_data(song_file)
+
+tests/test_parse_data.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/var/folders/rp/l0l3mhgx4zs1vfg5y9_c2qw80000gn/T/tmp_kwlvg_c/6dc618da-e74d-4339-898d-07b89deab43e'
+
+    def parse_data(file_path: str) -> dict[str, Song]:
+        """Parse data from file_path."""
+        song_dict = song_data(file_path)
+        song = {}
+        for song_id in song_dict:
+            song[song_id] = Song(
+                song_dict[song_id]["id"],
+                song_dict[song_id]["name"],
+                song_dict[song_id]["artists"],
+                song_dict[song_id]["year"],
+                song_dict[song_id]["popularity"],
+>               song_dict[song_id]["explicit"],
+                song_dict[song_id]["acousticness"],
+                song_dict[song_id]["danceability"],
+                song_dict[song_id]["energy"],
+                song_dict[song_id]["instrumentalness"],
+            )
+E           KeyError: 'explicit'
+
+src/parse_data.py:68: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_parse_data.py::test_song_class - TypeError: Song.__init__()...
+FAILED tests/test_parse_data.py::test_parse_data - KeyError: 'explicit'
+============================== 2 failed in 0.03s ===============================

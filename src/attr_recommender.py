@@ -25,7 +25,7 @@ class SongRecommender:
                     float(song.energy),
                 ]
             )
-        self.knn_model = NearestNeighbors(n_neighbors=10, metric="cosine")
+        self.knn_model = NearestNeighbors(n_neighbors=1, metric="cosine")
         self.knn_model.fit(X)
 
     def recommend_songs(
