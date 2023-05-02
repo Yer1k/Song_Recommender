@@ -1,0 +1,88 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.9, pytest-7.2.2, pluggy-1.0.0
+rootdir: /Users/yer1k/Documents/Master/Duke/2023 Spring/BIOSTAT 821/Group Project/Song_Recommender, configfile: pyproject.toml
+plugins: anyio-3.6.2
+collected 1 item
+
+tests/test_attr_recommender.py F                                         [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_SongRecommender _____________________________
+
+    def test_SongRecommender() -> None:
+        """Test SongRecommender class."""
+        with fake_files(
+            [
+                [
+                    "id",
+                    "name",
+                    "artists",
+                    "year",
+                    "popularity",
+                    "explicit",
+                    "acousticness",
+                    "danceability",
+                    "energy",
+                    "instrumentalness",
+                ],
+                [
+                    "4BJqT0PrAfrxzMOxytFOIz",
+                    "Piano Concerto No. 3 in D Minor",
+                    "Sergei Rachmaninoff & James Levine & Berliner Philharmoniker",
+                    "1921",
+                    "4",
+                    "0",
+                    "0.654",
+                    "0.499",
+                    "0.189",
+                    "0.0",
+                ],
+                [
+                    "7xPhfUan2yNtyFG0cUWkt8",
+                    "Clancy Lowered the Boom",
+                    "Dennis Day",
+                    "1921",
+                    "5",
+                    "0",
+                    "0.732",
+                    "0.548",
+                    "0.186",
+                    "0.0",
+                ],
+                [
+                    "1o6I8BglA6ylDMrIELygv1",
+                    "Gati Bali",
+                    "KHP Kridhamardawa Karaton Ngayogyakarta Hadiningrat",
+                    "1921",
+                    "5",
+                    "0",
+                    "0.961",
+                    "0.602",
+                    "0.0452",
+                    "0.93",
+                ],
+            ]
+        ) as (songfile,):
+            song_recommender = SongRecommender(songfile)
+            recommended_songs_1 = song_recommender.recommend_songs(
+                acousticness=0.6,
+                danceability=0.5,
+                instrumentalness=0.0,
+                energy=0.19,
+            )
+            assert recommended_songs_1 == ["Piano Concerto No. 3 in D Minor"]
+            recommended_songs_2 = song_recommender.recommend_songs(
+                acousticness=0.961,
+                danceability=0.602,
+                instrumentalness=0.0452,
+                energy=0.93,
+            )
+>           assert recommended_songs_2 == ["Gati Bali"]
+E           AssertionError: assert ['Piano Conce...3 in D Minor'] == ['Gati Bali']
+E             At index 0 diff: 'Piano Concerto No. 3 in D Minor' != 'Gati Bali'
+E             Use -v to get more diff
+
+tests/test_attr_recommender.py:75: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_attr_recommender.py::test_SongRecommender - AssertionError:...
+============================== 1 failed in 0.58s ===============================
