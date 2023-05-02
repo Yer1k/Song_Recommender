@@ -54,7 +54,6 @@ def test_calculate_artist_avg_popularity() -> None:
             ],
         ]
     ) as (song_file,):
-
         # run
         s = SongRecommendationSystem(song_file)
 
