@@ -1,5 +1,6 @@
 # mac files
 .DS_Store
+*/.DS_Store
 test_report.txt
 
 # Byte-compiled / optimized / DLL files
