@@ -22,7 +22,7 @@ class SongRecommendationSystem:
         """Calculate average popularity for each artist."""
         artist_popularity: dict[str, list[float]] = {}
         for song in self.song_dict.values():
-            for artist in song.artist_name.split("&"):
+            for artist in song.artist_name.split(" & "):
                 artist = artist.strip()
                 if artist not in artist_popularity:
                     artist_popularity[artist] = []
