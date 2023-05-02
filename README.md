@@ -24,11 +24,12 @@ To create this recommendation system, we divided the project into 4 key steps:
 1. Data Cleaning
 2. Exploratory Data Analysis (EDA)
 3. Building out a song popularity recommender
-4. Testing all components
+4. Incorporating song features recommender into the song feature recommender 
+5. Testing all components
 
 Below is an illustrative flow chart outlining these 4 steps:
 
-<img width="226" alt="image" src="https://user-images.githubusercontent.com/112578035/235776019-b45ce621-fea5-4fbf-97a2-70573ed4d4d8.png">
+<img width="350" alt="image" src="https://user-images.githubusercontent.com/112578035/235789126-14ee239c-effc-4217-8616-9d2005a0cd85.png">
 
 ## Installation
 
@@ -175,9 +176,8 @@ As we look to build out this song recommendation system and make it more compreh
 
 To build on our exisiting recommendation system, we will incorporate the following 4 steps into this project:
 1. Building out a song similarity recommender based on artist
-2. Building out a song similarity recommender based on song characteristics/features
-3. Testing all components
-4. Combining into a single song recommendation system
+2. Testing all components
+3. Combining into a single song recommendation system
 
 Below is an illustrative flow chart depicting how our future work will be integrating into our existing system:
 
