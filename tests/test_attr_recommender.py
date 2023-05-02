@@ -17,8 +17,8 @@ def test_SongRecommender() -> None:
                 "explicit",
                 "acousticness",
                 "danceability",
-                "energy",
                 "instrumentalness",
+                "energy",
             ],
             [
                 "4BJqT0PrAfrxzMOxytFOIz",
@@ -61,8 +61,8 @@ def test_SongRecommender() -> None:
         song_recommender = SongRecommender(songfile)
         recommended_songs_1 = song_recommender.recommend_songs(
             acousticness=0.6,
-            danceability=0.5,
-            instrumentalness=0.0,
-            energy=0.19,
+            danceability=0.8,
+            instrumentalness=0.9,
+            energy=0.7,
         )
         assert recommended_songs_1 == ["Piano Concerto No. 3 in D Minor"]
